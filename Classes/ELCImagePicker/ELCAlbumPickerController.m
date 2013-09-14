@@ -30,9 +30,17 @@
 	
 	[self.navigationItem setTitle:@"Loading..."];
 
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
-	[self.navigationItem setRightBarButtonItem:cancelButton];
-	[cancelButton release];
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setImage:[UIImage imageNamed:@"navbar_cancel.png"] forState:UIControlStateNormal];
+  [button setBackgroundColor:[UIColor clearColor]];
+  button.frame=CGRectMake(0.0, 0.0, 55.0, 44.0);
+  [button addTarget:self.parent action:@selector(cancelImagePicker) forControlEvents:UIControlEventTouchUpInside];
+  UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+  UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+  negativeSpacer.width = -5;
+  [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: negativeSpacer, cancelButton, nil] animated:YES];
+  [cancelButton release];
+  [negativeSpacer release];
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	self.assetGroups = tempArray;
@@ -130,6 +138,7 @@
     NSInteger gCount = [g numberOfAssets];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",[g valueForProperty:ALAssetsGroupPropertyName], (long)gCount];
+    cell.textLabel.font = [UIFont fontWithName:@"SimplonBPRegular" size:16.0];
     [cell.imageView setImage:[UIImage imageWithCGImage:[(ALAssetsGroup*)[self.assetGroups objectAtIndex:indexPath.row] posterImage]]];
 	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	
@@ -146,7 +155,9 @@
 
     picker.assetGroup = [self.assetGroups objectAtIndex:indexPath.row];
     [picker.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-    
+
+  picker.navigationItem.title = [NSString stringWithFormat:@"%@",[picker.assetGroup valueForProperty:ALAssetsGroupPropertyName]];
+
 	[self.navigationController pushViewController:picker animated:YES];
 	[picker release];
 }

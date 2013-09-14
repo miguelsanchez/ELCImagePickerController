@@ -69,7 +69,7 @@
             overlayView.hidden = asset.selected ? NO : YES;
         } else {
             if (overlayImage == nil) {
-                overlayImage = [UIImage imageNamed:@"Overlay.png"];
+                overlayImage = [UIImage imageNamed:@"upload_check_white.png"];
             }
             UIImageView *overlayView = [[UIImageView alloc] initWithImage:overlayImage];
             [_overlayViewArray addObject:overlayView];
@@ -110,9 +110,13 @@
 		UIImageView *imageView = [_imageViewArray objectAtIndex:i];
 		[imageView setFrame:frame];
 		[self addSubview:imageView];
-        
+
+      CGRect overlayFrame = CGRectMake(frame.origin.x + 47,
+                                       frame.origin.y + 47,
+                                       22, 22);
+
         UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
-        [overlayView setFrame:frame];
+        [overlayView setFrame:overlayFrame];
         [self addSubview:overlayView];
 		
 		frame.origin.x = frame.origin.x + frame.size.width + 4;

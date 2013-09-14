@@ -37,9 +37,28 @@
     if (self.immediateReturn) {
         
     } else {
-        UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)] autorelease];
-        [self.navigationItem setRightBarButtonItem:doneButtonItem];
-        [self.navigationItem setTitle:@"Loading..."];
+
+      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+      [button setImage:[UIImage imageNamed:@"navbar_ok.png"] forState:UIControlStateNormal];
+      button.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
+      [button setBackgroundColor:[UIColor clearColor]];
+      button.frame=CGRectMake(0.0, 0.0, 65.0, 44.0);
+      [button addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
+
+      UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+      button2.frame=CGRectMake(0.0, 0.0, 65.0, 44.0);
+      [button2 setTitle:@"Albums" forState:UIControlStateNormal];
+      [button2 setBackgroundColor:[UIColor clearColor]];
+      button2.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
+      [button2 addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
+
+      UIBarButtonItem *rightButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
+      UIBarButtonItem *leftButton = [[[UIBarButtonItem alloc] initWithCustomView:button2] autorelease];
+
+      UIBarButtonItem *negativeSpacer = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+      negativeSpacer.width = -5;
+      [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: negativeSpacer,rightButton, nil] animated:YES];
+      [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects: negativeSpacer,leftButton, nil] animated:YES];
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
@@ -61,6 +80,11 @@
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     self.columns = self.view.bounds.size.width / 80;
     [self.tableView reloadData];
+}
+
+- (void) dismiss:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)preparePhotos
@@ -93,8 +117,6 @@
                                   atScrollPosition:UITableViewScrollPositionBottom
                                           animated:NO];
         }
-        
-        [self.navigationItem setTitle:self.singleSelection ? @"Pick Photo" : @"Pick Photos"];
     });
     
     [pool release];
