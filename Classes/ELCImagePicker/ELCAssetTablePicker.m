@@ -9,6 +9,7 @@
 #import "ELCAssetCell.h"
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
+#import "WLBarButton.h"
 
 @interface ELCAssetTablePicker ()
 
@@ -38,15 +39,16 @@
         
     } else {
 
-      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+      WLBarButton *button = [WLBarButton buttonWithType:UIButtonTypeCustom];
+      button.paddingRight = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) ? 16.0 : 5.0;
       [button setImage:[UIImage imageNamed:@"navbar_ok.png"] forState:UIControlStateNormal];
       button.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
       [button setBackgroundColor:[UIColor clearColor]];
       button.frame=CGRectMake(0.0, 0.0, 65.0, 44.0);
       [button addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
 
-      UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-      button2.frame=CGRectMake(0.0, 0.0, 65.0, 44.0);
+      WLBarButton *button2 = [WLBarButton buttonWithType:UIButtonTypeCustom];
+      button2.frame=CGRectMake(0.0, 0.0, 53.0, 44.0);
       [button2 setTitle:@"Albums" forState:UIControlStateNormal];
       [button2 setBackgroundColor:[UIColor clearColor]];
       button2.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
@@ -55,10 +57,8 @@
       UIBarButtonItem *rightButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];
       UIBarButtonItem *leftButton = [[[UIBarButtonItem alloc] initWithCustomView:button2] autorelease];
 
-      UIBarButtonItem *negativeSpacer = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
-      negativeSpacer.width = -5;
-      [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: negativeSpacer,rightButton, nil] animated:YES];
-      [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects: negativeSpacer,leftButton, nil] animated:YES];
+      [self.navigationItem setRightBarButtonItem:rightButton animated:YES];
+      [self.navigationItem setLeftBarButtonItem:leftButton animated:YES];
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];

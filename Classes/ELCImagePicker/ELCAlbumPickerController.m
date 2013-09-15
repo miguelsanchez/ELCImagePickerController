@@ -8,6 +8,7 @@
 #import "ELCAlbumPickerController.h"
 #import "ELCImagePickerController.h"
 #import "ELCAssetTablePicker.h"
+#import "WLBarButton.h"
 
 @interface ELCAlbumPickerController ()
 
@@ -30,17 +31,15 @@
 	
 	[self.navigationItem setTitle:@"Loading..."];
 
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  WLBarButton *button = [WLBarButton buttonWithType:UIButtonTypeCustom];
+  button.paddingRight = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) ? 16.0 : 5.0;
   [button setImage:[UIImage imageNamed:@"navbar_cancel.png"] forState:UIControlStateNormal];
   [button setBackgroundColor:[UIColor clearColor]];
   button.frame=CGRectMake(0.0, 0.0, 55.0, 44.0);
   [button addTarget:self.parent action:@selector(cancelImagePicker) forControlEvents:UIControlEventTouchUpInside];
   UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-  UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-  negativeSpacer.width = -5;
-  [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: negativeSpacer, cancelButton, nil] animated:YES];
+  [self.navigationItem setRightBarButtonItem:cancelButton animated:YES];
   [cancelButton release];
-  [negativeSpacer release];
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	self.assetGroups = tempArray;
