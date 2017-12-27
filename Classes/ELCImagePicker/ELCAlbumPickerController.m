@@ -32,7 +32,7 @@
 	[self.navigationItem setTitle:@"Loading..."];
 
   WLBarButton *button = [WLBarButton buttonWithType:UIButtonTypeCustom];
-  button.paddingRight = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) ? 16.0 : 5.0;
+  button.paddingRight = 16.0;
   [button setImage:[UIImage imageNamed:@"navbar_cancel.png"] forState:UIControlStateNormal];
   [button setBackgroundColor:[UIColor clearColor]];
   button.frame=CGRectMake(0.0, 0.0, 55.0, 44.0);

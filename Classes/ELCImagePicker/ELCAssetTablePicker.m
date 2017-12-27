@@ -40,7 +40,7 @@
     } else {
 
       WLBarButton *button = [WLBarButton buttonWithType:UIButtonTypeCustom];
-      button.paddingRight = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) ? 16.0 : 5.0;
+      button.paddingRight = 16.0;
       [button setImage:[UIImage imageNamed:@"navbar_ok.png"] forState:UIControlStateNormal];
       button.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
       [button setBackgroundColor:[UIColor clearColor]];
