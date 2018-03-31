@@ -9,7 +9,7 @@
 #import "ELCAssetCell.h"
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
-#import "WLBarButton.h"
+#import "MSVUtils.h"
 
 @interface ELCAssetTablePicker ()
 
@@ -39,19 +39,32 @@
         
     } else {
 
-      WLBarButton *button = [WLBarButton buttonWithType:UIButtonTypeCustom];
-      button.paddingRight = 16.0;
+      UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
       [button setImage:[UIImage imageNamed:@"navbar_ok.png"] forState:UIControlStateNormal];
       button.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
       [button setBackgroundColor:[UIColor clearColor]];
-      button.frame=CGRectMake(0.0, 0.0, 65.0, 44.0);
+      button.frame=CGRectMake(0.0, 0.0, 20.0, 44.0);
       [button addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
 
-      WLBarButton *button2 = [WLBarButton buttonWithType:UIButtonTypeCustom];
-      button2.frame=CGRectMake(0.0, 0.0, 53.0, 44.0);
-      [button2 setTitle:@"Albums" forState:UIControlStateNormal];
+      UIView *wiselistButtonView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 55.0, 44.0)];
+      UILabel *wiselistLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0, 0.0, 45.0, 44.0)];
+      wiselistLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
+      wiselistLabel.text = @"Albums";
+      wiselistLabel.backgroundColor = [UIColor clearColor];
+      wiselistLabel.textColor = [UIColor whiteColor];
+      [wiselistButtonView addSubview:wiselistLabel];
+
+      UIImageView *arrowButton = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0, 10.0, 44.0)];
+      [arrowButton setImage:[MSVUtils imageRotatedByDegrees:180 andImage:[UIImage imageNamed:@"wiselists_arrow.png"]]];
+      arrowButton.contentMode = UIViewContentModeCenter;
+      [wiselistButtonView addSubview:arrowButton];
+
+      UIImage *wiselistTextImage = [MSVUtils grabImageFromView:wiselistButtonView];
+
+      UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
       [button2 setBackgroundColor:[UIColor clearColor]];
-      button2.titleLabel.font = [UIFont fontWithName:@"SimplonBP-Bold" size:12.0f];
+      [button2 setImage:wiselistTextImage forState:UIControlStateNormal];
+      button2.frame=CGRectMake(0.0, 0.0, 55.0, 44.0);
       [button2 addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
 
       UIBarButtonItem *rightButton = [[[UIBarButtonItem alloc] initWithCustomView:button] autorelease];

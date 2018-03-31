@@ -8,7 +8,6 @@
 #import "ELCAlbumPickerController.h"
 #import "ELCImagePickerController.h"
 #import "ELCAssetTablePicker.h"
-#import "WLBarButton.h"
 
 @interface ELCAlbumPickerController ()
 
@@ -31,11 +30,10 @@
 	
 	[self.navigationItem setTitle:@"Loading..."];
 
-  WLBarButton *button = [WLBarButton buttonWithType:UIButtonTypeCustom];
-  button.paddingRight = 16.0;
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setImage:[UIImage imageNamed:@"navbar_cancel.png"] forState:UIControlStateNormal];
   [button setBackgroundColor:[UIColor clearColor]];
-  button.frame=CGRectMake(0.0, 0.0, 55.0, 44.0);
+  button.frame=CGRectMake(0.0, 0.0, 12.0, 44.0);
   [button addTarget:self.parent action:@selector(cancelImagePicker) forControlEvents:UIControlEventTouchUpInside];
   UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button];
   [self.navigationItem setRightBarButtonItem:cancelButton animated:YES];
